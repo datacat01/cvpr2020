@@ -14,13 +14,31 @@ import math
 def capture_wideocam():
 
     cap = cv2.VideoCapture(0)
-    ret, frame = cap.read() 
-    
-    cv2.imwrite("opencv_frame_img.png", frame)
-    cv2.imshow('Press any key to close', frame) 
-    cv2.waitKey(0)
+
+    frame_width = math.ceil(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = math.ceil(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter('initial_output.mp4', fourcc, 10.0, (frame_width, frame_height))
+
+    while(cap.isOpened()):
+        ret, frame = cap.read() # If frame is read correctly, ret will be True.
+        if not ret:
+            break
+
+        out.write(frame)
+        cv2.imshow('Frame. Press q to exit.',frame)
+
+        if (cv2.waitKey(1) & 0xFF) == ord('q'):
+            break
+
+    cap.release()
+    out.release()
     cv2.destroyAllWindows()
-    cap.release()  
+
+
+def read_vid(path):
+    pass
 
 
 def draw_rectangle():
