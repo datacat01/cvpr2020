@@ -13,15 +13,16 @@ import math
 
 VIDEO_PATH_1 = 'initial_output.mp4'
 VIDEO_PATH_2 = 'result.mp4'
+FOURCC = cv2.VideoWriter_fourcc(*'mp4v')
+
+get_height = lambda capture: math.ceil(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+get_width = lambda capture: math.ceil(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+
 
 def capture_wideocam():
     cap = cv2.VideoCapture(0)
 
-    frame_width = math.ceil(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_height = math.ceil(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter(VIDEO_PATH_1, fourcc, 10.0, (frame_width, frame_height))
+    out = cv2.VideoWriter(VIDEO_PATH_1, FOURCC, 10.0, (get_width(cap), get_height(cap)))
 
     while(cap.isOpened()):
         ret, frame = cap.read() # If frame is read correctly, ret will be True.
@@ -39,27 +40,31 @@ def capture_wideocam():
     cv2.destroyAllWindows()
 
 
-def play_vid(path=VIDEO_PATH_1):
+def draw_rectangle(path=VIDEO_PATH_1):
     cap = cv2.VideoCapture(path)
-    frame_counter = 0
+    out = cv2.VideoWriter(VIDEO_PATH_2, FOURCC, 10.0, (get_width(cap), get_height(cap)))
 
     while(cap.isOpened()):
         ret, frame = cap.read()
-        if not ret:
-            break
+        gray_one_channel = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray_three_channels = cv2.cvtColor(gray_one_channel, cv2.COLOR_GRAY2BGR)
 
-        cv2.imshow('initial frame', frame)
+        cv2.line(gray_three_channels,(0,0),(150,150),(255,255,255),15)
+        cv2.rectangle(gray_three_channels,(15,25),(200,150),(0,0,255),15)
+
+        cv2.imshow('video result', gray_three_channels)
+        cv2.imshow('video original', frame)
+
+        out.write(gray_three_channels)
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
+    out.release()
     cv2.destroyAllWindows()
-
-
-def draw_rectangle():
-    pass
 
 
 if __name__ == "__main__":
     capture_wideocam()
-    play_vid()
+    draw_rectangle()
