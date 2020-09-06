@@ -11,15 +11,17 @@ import math
     кроків замість звалища картинок матимемо відеофайл (наприклад .avi).
 """
 
-def capture_wideocam():
+VIDEO_PATH_1 = 'initial_output.mp4'
+VIDEO_PATH_2 = 'result.mp4'
 
+def capture_wideocam():
     cap = cv2.VideoCapture(0)
 
     frame_width = math.ceil(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = math.ceil(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter('initial_output.mp4', fourcc, 10.0, (frame_width, frame_height))
+    out = cv2.VideoWriter(VIDEO_PATH_1, fourcc, 10.0, (frame_width, frame_height))
 
     while(cap.isOpened()):
         ret, frame = cap.read() # If frame is read correctly, ret will be True.
@@ -27,7 +29,7 @@ def capture_wideocam():
             break
 
         out.write(frame)
-        cv2.imshow('Frame. Press q to exit.',frame)
+        cv2.imshow('Press q to stop the recording.',frame)
 
         if (cv2.waitKey(1) & 0xFF) == ord('q'):
             break
@@ -37,8 +39,21 @@ def capture_wideocam():
     cv2.destroyAllWindows()
 
 
-def read_vid(path):
-    pass
+def play_vid(path=VIDEO_PATH_1):
+    cap = cv2.VideoCapture(path)
+    frame_counter = 0
+
+    while(cap.isOpened()):
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        cv2.imshow('initial frame', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 def draw_rectangle():
@@ -47,3 +62,4 @@ def draw_rectangle():
 
 if __name__ == "__main__":
     capture_wideocam()
+    play_vid()
