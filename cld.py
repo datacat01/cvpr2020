@@ -17,6 +17,7 @@ import numpy as np
             The purpose of the zigzag is to convert the 2D array of quantized DCT
             coefficients into a 1D array, where the first elements come from the
             upper left, and later elements come from the lower right, of the 2D array
+    Source: https://en.wikipedia.org/wiki/Color_layout_descriptor
 """
 
 
@@ -29,6 +30,7 @@ class ColorLayoutDescriptor:
 
 
     def __zigzag_value(self, i, j, n):
+        # code from:
         # https://medium.com/100-days-of-algorithms/day-63-zig-zag-51a41127f31
         # upper side of interval
         if i + j >= n:
@@ -44,13 +46,13 @@ class ColorLayoutDescriptor:
         for i in range(n):
             for j in range(m):
                 zigzag_order[i, j] = self.__zigzag_value(i, j, n)
-        
-        print(array.shape)
-        print(zigzag_order.shape)
-        print(zigzag_order)
 
-        zigzag_scanning_res = array[zigzag_order]
-        
+        zigzag_scanning_res = np.empty(n*m)
+        for idx_i, arr in enumerate(array):
+            for idx_j, el in enumerate(arr):
+                zigzag_idx = zigzag_order[idx_i, idx_j]
+                zigzag_scanning_res[zigzag_idx] = el
+
         return zigzag_scanning_res
 
 
@@ -77,10 +79,14 @@ class ColorLayoutDescriptor:
         # Zigzag scanning
         res = [self._zigzag(i) for i in transformed]
 
-        return
+        return res
 
 
 if __name__ == "__main__":
     cld = ColorLayoutDescriptor(cv2.imread("test_img.jpg"))
-    descriptor_result = cld.descript()
-    print(descriptor_result)
+    descriptor_result1 = cld.descript()
+    print(descriptor_result1)
+
+    cld.img = cv2.imread("test_img2.jpeg")
+    descriptor_result2 = cld.descript()
+    print(descriptor_result2)
