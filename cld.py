@@ -18,15 +18,20 @@ import numpy as np
             coefficients into a 1D array, where the first elements come from the
             upper left, and later elements come from the lower right, of the 2D array
     Source: https://en.wikipedia.org/wiki/Color_layout_descriptor
+
+    Algorithm pros:
+        Compact and resolution invariant
+    Algorithm cons:
+        ??
 """
 
 
 class ColorLayoutDescriptor:
 
-    def __init__(self, img):
+    def __init__(self, img, rows=8, cols=8):
         self.img = img
-        self.rows = 8
-        self.cols = 8
+        self.rows = rows
+        self.cols = cols
 
 
     def __zigzag_value(self, i, j, n):
@@ -85,8 +90,12 @@ class ColorLayoutDescriptor:
 if __name__ == "__main__":
     cld = ColorLayoutDescriptor(cv2.imread("test_img.jpg"))
     descriptor_result1 = cld.descript()
+    print("___________________________1_______________________________")
     print(descriptor_result1)
 
     cld.img = cv2.imread("test_img2.jpeg")
+    cld.rows = 16
+    cld.cols = 16
     descriptor_result2 = cld.descript()
+    print("___________________________2_______________________________")
     print(descriptor_result2)
