@@ -18,7 +18,7 @@ class EdgeHistogramDescriptor:
     
 
     def __filter(self, blocks):
-        # apply edge filters to average grey levels of a block
+        # apply edge filters to 2x2 sub-blocks of a block
         sqrt2 = math.sqrt(2)
         edge_strengths = []
         edge_masks = {
@@ -62,7 +62,6 @@ class EdgeHistogramDescriptor:
     
 
     def descript(self):
-        #perform description
         hist = []
 
         for row in range(self.rows):
