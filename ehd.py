@@ -5,18 +5,16 @@ import cv2
 
 class EdgeHistogramDescriptor:
     
-    def __init__(self, img, rows=8, cols=8, threshold=0.1):
+    def __init__(self, img, threshold=0.1):
         self.img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        self.rows, self.cols = rows, cols
         self.threshold = threshold
+        self.rows, self.cols = 4, 4
 
         self.__block_h = int(self.img.shape[0]/self.rows)
         self.__block_w = int(self.img.shape[1]/self.cols)
 
         self.__sub_block_i = int(self.__block_h/2)
         self.__sub_block_j = int(self.__block_w/2)
-        print('block', self.__block_h, self.__block_w)
-        print('sub block', self.__sub_block_i, self.__sub_block_j)
     
 
     def __filter(self, blocks):
@@ -77,12 +75,14 @@ class EdgeHistogramDescriptor:
                 bin_for_block = self.__form_hist(edges)
                 hist.append(bin_for_block)
         
-        return list(itertools.chain.from_iterable(hist))
+        hist = np.array(hist).astype(int)
+        global_hist = np.mean(hist, axis=0)
+        return hist, global_hist
 
 
 
 
 if __name__ == "__main__":
-    ehd = EdgeHistogramDescriptor(cv2.imread("test_img.jpeg"))
-    histogram = ehd.descript()
-    print(histogram)
+    ehd = EdgeHistogramDescriptor(cv2.imread("vertical-lines.jpg"))
+    histogram, global_histogram = ehd.descript()
+    print(global_histogram)
