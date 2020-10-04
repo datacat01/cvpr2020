@@ -1,4 +1,4 @@
+__pycache__/
+.vscode/
+.ipynb_checkpoints/
 .DS_Store
-test_img.jpeg
-horizontal-lines.jpg
-vertical-lines.jpg

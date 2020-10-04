@@ -1,0 +1,19 @@
+<annotation>
+    <folder>violet_flower_jpg</folder>
+    <filename>violet_flower00048.jpg</filename>
+    <size>
+        <width>3024</width>
+        <height>4032</height>
+        <depth>3</depth>
+    </size>
+    <object>
+        <name>ignore</name>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1812</xmin>
+            <ymin>1919</ymin>
+            <xmax>2803</xmax>
+            <ymax>2952</ymax>
+        </bndbox>
+    </object>
+</annotation>
