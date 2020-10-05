@@ -6,8 +6,10 @@ from feature_det_matching import FeatureMatcher
 
 # IMG_FOLDER_TRAIN = 'goose_cup_train/'
 # IMG_FOLDER_TEST = 'goose_cup/'
-IMG_FOLDER_TRAIN = 'book_cpp_train/'
-IMG_FOLDER_TEST = 'book_cpp/'
+# IMG_FOLDER_TRAIN = 'book_cpp_train/'
+# IMG_FOLDER_TEST = 'book_cpp/'
+IMG_FOLDER_TRAIN = 'clock_train/'
+IMG_FOLDER_TEST = 'clock/'
 
 
 def go_through_img_and_compute():
@@ -55,4 +57,4 @@ def go_through_img_and_compute():
 if __name__ == '__main__':
     names, scores = go_through_img_and_compute()
     scores_df = pd.DataFrame(scores, index=names)
-    scores_df.to_csv('book_cpp_metrics.csv')
+    scores_df.to_csv('clock_metrics.csv')
