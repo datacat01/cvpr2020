@@ -381,20 +381,23 @@ def blockMotion(videodata, method='DS', mbSize=8, p=2):
 
     luminancedata = luminancedata.reshape((numFrames, height, width))
 
-    motionData = np.zeros((numFrames - 1, np.int(height / mbSize), np.int(width / mbSize), 2), np.int8)
-
+    motion_n = numFrames//2
+    if numFrames%2 != 0:
+        motion_n += 1
+    motionData = np.zeros((motion_n, np.int(height / mbSize), np.int(width / mbSize), 2), np.int8)
+    # print('motion data', motionData.shape)
     if method == "4SS":
-        for i in range(0, numFrames - 1, 2):
+        for append_idx, i in enumerate(range(0, numFrames - 1, 2)):
             motion, comps = FourSS(luminancedata[i + 1, :, :], luminancedata[i, :, :], mbSize, p)
-            motionData[i, :, :, :] = motion
+            motionData[append_idx, :, :, :] = motion
     elif method == "3SS":
-        for i in range(0, numFrames - 1, 2):
+        for append_idx, i in enumerate(range(0, numFrames - 1, 2)):
             motion, comps = ThreeSS(luminancedata[i + 1, :, :], luminancedata[i, :, :], mbSize, p)
-            motionData[i, :, :, :] = motion
+            motionData[append_idx, :, :, :] = motion
     elif method == "DS":
-        for i in range(0, numFrames - 1, 2):
+        for append_idx, i in enumerate(range(0, numFrames - 1, 2)):
             motion, comps = DS(luminancedata[i + 1, :, :], luminancedata[i, :, :], mbSize, p)
-            motionData[i, :, :, :] = motion
+            motionData[append_idx, :, :, :] = motion
     else:
         raise NotImplementedError
 

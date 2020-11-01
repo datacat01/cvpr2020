@@ -2,6 +2,7 @@ import os
 import numpy as np
 from motion_algos import blockMotion
 import skvideo.io
+import skvideo.datasets
 
 VID_NAME = 'video.mp4'
 ENCODED_NAME = f'encoded_{VID_NAME[:-4]}.npz'
@@ -26,6 +27,8 @@ def encoder(videodata, method='DS', mbSize=8, p=2, compute_motion_if_exists=Fals
 
 
 if __name__ == '__main__':
-    videodata = skvideo.io.vread(VID_NAME)
+    # videodata = skvideo.io.vread(VID_NAME)
+    videodata = skvideo.io.vread(skvideo.datasets.bigbuckbunny())
+    print(videodata.shape)
     for method in METHODS:
-        encoder(videodata, method=method)
+        encoder(videodata, method=method, mbSize=6)
