@@ -1,0 +1,16 @@
+VID SHAPE: (475, 540, 960, 3)
+Encoder time for 4SS: 1410.8695368766785
+Motion vect computation time for 4SS: 1409.5273938179016
+-----------------------------------------------
+
+
+VID SHAPE: (475, 540, 960, 3)
+Encoder time for 3SS: 599.8102881908417
+Motion vect computation time for 3SS: 599.6175589561462
+-----------------------------------------------
+
+
+VID SHAPE: (475, 540, 960, 3)
+Encoder time for DS: 806.6392769813538
+Motion vect computation time for DS: 806.3202428817749
+-----------------------------------------------
