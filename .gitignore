@@ -1,0 +1,7 @@
+.DS_Store
+.vscode/
+temp.py
+__pycache__
+DS_encoded_video.npz
+4SS_encoded_video.npz
+3SS_encoded_video.npz
