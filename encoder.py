@@ -31,7 +31,7 @@ def encoder(videodata, method='DS', mbSize=8, p=2, compute_motion_if_exists=Fals
     motion = blockMotion(videodata, method=method, mbSize=mbSize, p=p)
     motion_time = time.time() - start_time_motion
 
-    cut_vid = np.delete(videodata, list(range(0, videodata.shape[0], 2)), axis=0)
+    cut_vid = np.delete(videodata, list(range(1, videodata.shape[0]-1, 2)), axis=0)
 
     encoder_time = time.time() - start_time_enc
 
@@ -47,4 +47,5 @@ if __name__ == '__main__':
     # videodata = skvideo.io.vread(skvideo.datasets.bigbuckbunny())
     print(videodata.shape)
     for method in METHODS:
-        encoder(videodata, method=method, mbSize=6)
+        encoder(videodata, method=method, mbSize=8)
+        break
