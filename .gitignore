@@ -1,0 +1,5 @@
+3SS_encoded_video.npz
+3SS_motion.mp4
+.DS_Store
+__pycache__/
+lab3.py
